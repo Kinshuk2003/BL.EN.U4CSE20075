@@ -88,5 +88,15 @@ def get_trains():
     )
 
     return jsonify(sorted_trains)
+
+@app.route('/trains/<train_number>', methods=['GET'])
+def get_train_details(train_number):
+    train_data = fetch_train_data()
+
+    for train in train_data:
+        if train["trainNumber"] == train_number:
+            return jsonify(train)
+
+    return jsonify({"message": "Train not found"}), 404
 if __name__ == '__main__':
     app.run(debug=True)
